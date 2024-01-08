@@ -97,12 +97,14 @@ const ProductList = () => {
                   {new Date(date).toLocaleDateString("fa-IR-u-nu-latn")}
                 </div>
                 {/* <div>{new Date(date) - new Date()}</div> */}
-                <div>
-                  {Math.ceil(
-                    Math.abs(new Date(date) - new Date()) /
-                      (1000 * 60 * 60 * 24)
-                  )}{" "}
-                  day
+                <div className=" whitespace-nowrap flex flex-row-reverse">
+                  <span>
+                    {Math.ceil(
+                      Math.abs(new Date(date) - new Date()) /
+                        (1000 * 60 * 60 * 24)
+                    )}
+                  </span>
+                  <span> روز تا تحویل</span>
                 </div>
                 <div>
                   <button
