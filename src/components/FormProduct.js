@@ -99,7 +99,7 @@ const FormProduct = () => {
               onChange={handleDate}
               value={date}
               format="YYYY/MM/DD"
-              calendarPosition="center "
+              // calendarPosition="center "
             />
           </div>
         </div>
