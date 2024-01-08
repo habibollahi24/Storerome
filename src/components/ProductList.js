@@ -19,7 +19,9 @@ const ProductList = () => {
 
   useEffect(() => {
     let result = products;
-    result = result.filter((product) => product.title.toLowerCase().includes(searchValue));
+    result = result.filter((product) =>
+      product.title.toLowerCase().includes(searchValue)
+    );
     result = result.sort((a, b) => {
       if (sort === "latest") {
         return new Date(a.createdAt) > new Date(b.createdAt) ? -1 : 1;
@@ -40,13 +42,17 @@ const ProductList = () => {
     setProducts(filtered);
   };
 
+  console.log(products);
+
   return (
     <div>
       <div className=" border-b border-gray-400 text-xl ">Product List:</div>
-      {products.length === 0 && <div className="text-gray-400"> Empty Anbar ... </div>}
+      {products.length === 0 && (
+        <div className="text-gray-400"> Empty Anbar ... </div>
+      )}
       <div className="">
         {filterProducts.map((product) => {
-          const { id, createdAt, category, title, quantity } = product;
+          const { id, createdAt, category, title, quantity, date } = product;
           return (
             <div
               key={id}
@@ -54,7 +60,7 @@ const ProductList = () => {
             >
               <div className="text-lg font-semibold text-gray-300">{title}</div>
               <div className=" flex items-center justify-between md:justify-end gap-x-5  col-span-2">
-                <div
+                {/* <div
                   data-tip="createdAt"
                   className="text-sm font-semibold"
                   onMouseEnter={() => showTooltip(true)}
@@ -64,7 +70,7 @@ const ProductList = () => {
                   }}
                 >
                   {createdAt}
-                </div>
+                </div> */}
                 <div
                   data-tip="category"
                   onMouseEnter={() => showTooltip(true)}
@@ -86,6 +92,17 @@ const ProductList = () => {
                   className="flex justify-center items-center w-max rounded-full border-2 text-lg px-2 bg-gray-400 text-white  border-white"
                 >
                   {quantity}
+                </div>
+                <div>
+                  {new Date(date).toLocaleDateString("fa-IR-u-nu-latn")}
+                </div>
+                {/* <div>{new Date(date) - new Date()}</div> */}
+                <div>
+                  {Math.ceil(
+                    Math.abs(new Date(date) - new Date()) /
+                      (1000 * 60 * 60 * 24)
+                  )}{" "}
+                  day
                 </div>
                 <div>
                   <button

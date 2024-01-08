@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useCategory } from "../context/CategoryContext";
 import { useProducts } from "../context/ProductsContext";
+import DatePicker from "react-multi-date-picker";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
 
 const FormProduct = () => {
   const [productform, setproductform] = useState({
@@ -8,6 +11,13 @@ const FormProduct = () => {
     quantity: 1,
     category: "",
   });
+  const [date, setDate] = useState(new Date());
+
+  function handleDate(value) {
+    //your modification on passed value ....
+    setDate(value);
+    console.log(value.toDate());
+  }
 
   const { category } = useCategory();
   const { products, setProducts } = useProducts();
@@ -18,6 +28,7 @@ const FormProduct = () => {
 
   const sendCategoryData = (e) => {
     e.preventDefault();
+    // console.log(date);
     setProducts([
       ...products,
       {
@@ -25,6 +36,7 @@ const FormProduct = () => {
         quantity: productform.quantity,
         category: productform.category,
         id: Math.floor(Math.random() * 100000),
+        date: date.toDate(),
         createdAt: new Date().toLocaleDateString("fa-IR-u-nu-latn"),
       },
     ]);
@@ -64,7 +76,9 @@ const FormProduct = () => {
               value={productform.category}
               onChange={changeHandler}
             >
-              <option className="bg-slate-800 appearance-none p-4">select category</option>
+              <option className="bg-slate-800 appearance-none p-4">
+                select category
+              </option>
               {category.map((c) => {
                 return (
                   <option key={c.id} value={c.title} className="bg-slate-800 ">
@@ -74,8 +88,25 @@ const FormProduct = () => {
               })}
             </select>
           </div>
+          <div>
+            <label className="block mb-1">Deadline:</label>
+            <DatePicker
+              calendar={persian}
+              locale={persian_fa}
+              inputClass="bg-transparent border w-full border-gray-400 rounded-md"
+              containerClassName="w-full"
+              placeholder="ددلاین"
+              onChange={handleDate}
+              value={date}
+              format="YYYY/MM/DD"
+              calendarPosition="center "
+            />
+          </div>
         </div>
-        <button type="submit" className="bg-gray-500 text-white rounded-md py-2 px-4 w-full">
+        <button
+          type="submit"
+          className="bg-gray-500 text-white rounded-md py-2 px-4 w-full"
+        >
           Create New Product
         </button>
       </form>
